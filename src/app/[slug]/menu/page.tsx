@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import RestaurantHeader from "./components/header"
+import RestaurantCategories from "./components/categories"
 
 interface RestaurantMenuPageProps {
     params: Promise <{slug: string}>
@@ -25,6 +26,11 @@ async function RestaurantMenuPage({params, searchParams}:RestaurantMenuPageProps
     const restaurant = await db.restaurant.findUnique({
         where: {
             slug
+        },
+        include: {
+            menuCategories: {
+                include: {products: true}
+            },
         }
     })
     if(!restaurant){
@@ -34,6 +40,7 @@ async function RestaurantMenuPage({params, searchParams}:RestaurantMenuPageProps
   return (
     <div>
        <RestaurantHeader restaurant={restaurant} />
+       <RestaurantCategories restaurant={restaurant} />
     </div>
   )
 }
