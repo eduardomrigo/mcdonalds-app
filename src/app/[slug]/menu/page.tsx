@@ -1,25 +1,24 @@
 import { Button } from "@/components/ui/button"
 import { db } from "@/lib/prisma"
-import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import RestaurantHeader from "./components/header"
 import RestaurantCategories from "./components/categories"
 
 interface RestaurantMenuPageProps {
-    params: Promise <{slug: string}>
-    searchParams : Promise<{consumptionMethod : string}>
+    params: Promise<{ slug: string }>
+    searchParams: Promise<{ consumptionMethod: string }>
 }
 
-const isConsumptionMethodValid = (consumptionMethod:string) => {
-    return ['DINE_IN','TAKEAWAY'].includes(consumptionMethod.toUpperCase())
+const isConsumptionMethodValid = (consumptionMethod: string) => {
+    return ['DINE_IN', 'TAKEAWAY'].includes(consumptionMethod.toUpperCase())
 }
 
-async function RestaurantMenuPage({params, searchParams}:RestaurantMenuPageProps) {
+async function RestaurantMenuPage({ params, searchParams }: RestaurantMenuPageProps) {
     const { slug } = await params
-    const {consumptionMethod} = await searchParams
+    const { consumptionMethod } = await searchParams
 
-    if (!isConsumptionMethodValid(consumptionMethod)){
+    if (!isConsumptionMethodValid(consumptionMethod)) {
         return notFound()
     }
 
@@ -29,20 +28,20 @@ async function RestaurantMenuPage({params, searchParams}:RestaurantMenuPageProps
         },
         include: {
             menuCategories: {
-                include: {products: true}
+                include: { products: true }
             },
         }
     })
-    if(!restaurant){
+    if (!restaurant) {
         return notFound()
     }
 
-  return (
-    <div>
-       <RestaurantHeader restaurant={restaurant} />
-       <RestaurantCategories restaurant={restaurant} />
-    </div>
-  )
+    return (
+        <div>
+            <RestaurantHeader restaurant={restaurant} />
+            <RestaurantCategories restaurant={restaurant} />
+        </div>
+    )
 }
 
 export default RestaurantMenuPage

@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/prisma";
-import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductHeader from "./components/product-header";
 import ProductDetail from "./components/product-details";
@@ -19,7 +17,7 @@ async function ProductPage({ params }: ProductPageProps) {
         },
         include: {
             restaurant: {
-                select:{
+                select: {
                     name: true,
                     avatarImageUrl: true,
                     slug: true
@@ -31,14 +29,14 @@ async function ProductPage({ params }: ProductPageProps) {
     if (!product) {
         return notFound()
     }
-    if(product.restaurant.slug.toUpperCase() !== slug.toUpperCase()){
+    if (product.restaurant.slug.toUpperCase() !== slug.toUpperCase()) {
         return notFound()
     }
 
     return (
         <div className="flex h-full flex-col">
-         <ProductHeader product={product} />
-         <ProductDetail product={product} />
+            <ProductHeader product={product} />
+            <ProductDetail product={product} />
         </div>
 
     )

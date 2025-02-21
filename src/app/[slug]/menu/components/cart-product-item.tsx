@@ -2,7 +2,7 @@ import Image from "next/image"
 import { CartContext, CartProduct } from "../contexts/cart"
 import { formatCurrency } from "@/helpers/fomat-currency"
 import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, Minus, Plus, TrashIcon } from "lucide-react"
 import { useContext } from "react"
 
 interface CartItemProps {
@@ -35,7 +35,7 @@ function CartProductItem({ product }: CartItemProps) {
                             className="rounded-lg"
                             onClick={() => decreaseProductQuantity(product.id)}
                         >
-                            <ChevronLeftIcon />
+                            <Minus />
                         </Button>
                         <p className="text-xs w-7">{product.quantity}</p>
                         <Button
@@ -44,7 +44,7 @@ function CartProductItem({ product }: CartItemProps) {
                             className="rounded-lg"
                             onClick={() => increaseProductQuantity(product.id)}
                         >
-                            <ChevronRightIcon />
+                            <Plus />
                         </Button>
                     </div>
                 </div>
