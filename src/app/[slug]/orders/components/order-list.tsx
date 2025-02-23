@@ -1,3 +1,5 @@
+'use client'
+
 import { OrderStatus, Prisma } from "@prisma/client"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
@@ -8,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { formatCurrency } from "@/helpers/fomat-currency"
+import { useRouter } from "next/navigation"
 
 interface OrderListProps {
     orders: Array<
@@ -37,9 +40,11 @@ const getStatusLabel = (status: OrderStatus) => {
 
 
 const OrderList = ({ orders }: OrderListProps) => {
+    const router = useRouter()
+    const handleBackClick = () => router.back()
     return (
         <div className="space-y-6 p-6">
-            <Button size={"icon"} variant={'secondary'} className="rounded-full">
+            <Button size={"icon"} variant={'secondary'} className="rounded-full" onClick={handleBackClick}>
                 <ChevronLeftIcon />
             </Button>
             <div className="flex items-center gap-3">
