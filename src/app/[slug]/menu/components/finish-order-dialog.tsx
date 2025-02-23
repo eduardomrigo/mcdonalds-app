@@ -20,6 +20,13 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { PatternFormat } from 'react-number-format'
+import { createOrder } from "../actions/create-order"
+import { useParams, useSearchParams } from "next/navigation"
+import { ConsumptionMethod } from "@prisma/client"
+import { useContext, useState } from "react"
+import { CartContext } from "../contexts/cart"
+import { toast } from "sonner"
+import { Loader2 } from "lucide-react"
 
 const formSchema = z.object({
     name: z.string().trim().min(1, {
@@ -40,6 +47,10 @@ interface FinishOrderDialogProps {
 }
 
 function FinishOrderDialog({ open, onOpenChange }: FinishOrderDialogProps) {
+    const { slug } = useParams<{ slug: string }>()
+    const [isLoading, setIsLoading] = useState(false)
+    const { products } = useContext(CartContext)
+    const searchParams = useSearchParams()
     const form = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -49,8 +60,24 @@ function FinishOrderDialog({ open, onOpenChange }: FinishOrderDialogProps) {
         shouldUnregister: true
     })
 
-    const onSubmit = (data: FormSchema) => {
-        console.log(data)
+    const onSubmit = async (data: FormSchema) => {
+        try {
+            setIsLoading(true)
+            const consumptionMethod = searchParams.get("consumptionMethod") as ConsumptionMethod
+            await createOrder({
+                consumptionMethod,
+                customerCpf: data.cpf,
+                customerName: data.name,
+                products,
+                slug,
+            })
+            onOpenChange(false)
+            toast.success("Pedido finalizado com sucesso! 🎉")
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -97,12 +124,17 @@ function FinishOrderDialog({ open, onOpenChange }: FinishOrderDialogProps) {
                                 )}
                             />
                             <DrawerFooter>
-                                <Button
-                                    type="submit"
-                                    className="w-full rounded-full"
-                                >
-                                    Finalizar
-                                </Button>
+                                {isLoading ? (
+                                    <Button disabled className="w-full rounded-full">
+                                        <Loader2 className="animate-spin" />
+                                        Finalizando
+                                    </Button>
+                                ) : (
+                                    <Button type="submit" className="w-full rounded-full">
+                                        Finalizar
+                                    </Button>
+                                )}
+
                                 <DrawerClose asChild>
                                     <Button
                                         variant="outline"
