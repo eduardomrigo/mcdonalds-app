@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { db } from "@/lib/prisma"
-import Image from "next/image"
 import { notFound } from "next/navigation"
-import RestaurantHeader from "./components/header"
+
+import { db } from "@/lib/prisma"
+
 import RestaurantCategories from "./components/categories"
+import RestaurantHeader from "./components/header"
 
 interface RestaurantMenuPageProps {
     params: Promise<{ slug: string }>

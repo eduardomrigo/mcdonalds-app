@@ -1,5 +1,15 @@
 'use client'
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ConsumptionMethod } from "@prisma/client"
+import { Loader2 } from "lucide-react"
+import { useParams, useSearchParams } from "next/navigation"
+import { useContext, useState } from "react"
+import { useForm } from "react-hook-form"
+import { PatternFormat } from 'react-number-format'
+import { toast } from "sonner"
+import { z } from "zod"
+
 import { Button } from "@/components/ui/button"
 import {
     Drawer,
@@ -11,22 +21,12 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-
-import { isValidCpf } from "../helpers/cpf"
-import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { PatternFormat } from 'react-number-format'
+
 import { createOrder } from "../actions/create-order"
-import { useParams, useSearchParams } from "next/navigation"
-import { ConsumptionMethod } from "@prisma/client"
-import { useContext, useState } from "react"
 import { CartContext } from "../contexts/cart"
-import { toast } from "sonner"
-import { Loader2 } from "lucide-react"
+import { isValidCpf } from "../helpers/cpf"
 
 const formSchema = z.object({
     name: z.string().trim().min(1, {

@@ -1,10 +1,12 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import React, { useContext, useState } from 'react'
-import { CartContext } from '../contexts/cart'
-import CartProductItem from './cart-product-item'
+
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { formatCurrency } from '@/helpers/fomat-currency'
+
+import { CartContext } from '../contexts/cart'
+import CartProductItem from './cart-product-item'
 import FinishOrderDialog from './finish-order-dialog'
 
 function CartSheet() {

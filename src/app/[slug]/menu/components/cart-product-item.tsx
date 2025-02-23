@@ -1,9 +1,11 @@
+import { Minus, Plus, TrashIcon } from "lucide-react"
 import Image from "next/image"
-import { CartContext, CartProduct } from "../contexts/cart"
-import { formatCurrency } from "@/helpers/fomat-currency"
-import { Button } from "@/components/ui/button"
-import { ChevronLeftIcon, ChevronRightIcon, Minus, Plus, TrashIcon } from "lucide-react"
 import { useContext } from "react"
+
+import { Button } from "@/components/ui/button"
+import { formatCurrency } from "@/helpers/fomat-currency"
+
+import { CartContext, CartProduct } from "../contexts/cart"
 
 interface CartItemProps {
     product: CartProduct

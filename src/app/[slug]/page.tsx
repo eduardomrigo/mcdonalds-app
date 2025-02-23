@@ -1,7 +1,9 @@
-import { db } from '@/lib/prisma'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import React from 'react'
+
+import { db } from '@/lib/prisma'
+
 import ConsumptionMethodOption from './components/consumption-method-option'
 
 interface RestaurantPageProps {

@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { db } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import ProductHeader from "./components/product-header";
+
+import { db } from "@/lib/prisma";
+
 import ProductDetail from "./components/product-details";
+import ProductHeader from "./components/product-header";
 
 interface ProductPageProps {
     params: Promise<{ slug: string; productId: string }>

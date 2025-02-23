@@ -1,8 +1,9 @@
-import { formatCurrency } from "@/helpers/fomat-currency"
 import { Product } from "@prisma/client"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams, useSearchParams } from "next/navigation"
+
+import { formatCurrency } from "@/helpers/fomat-currency"
 
 interface ProductsProps {
     products: Product[]
