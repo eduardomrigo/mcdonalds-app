@@ -5,6 +5,8 @@ import { formatCurrency } from "@/helpers/fomat-currency"
 import { OrderStatus, Prisma } from "@prisma/client"
 import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react"
 import Image from "next/image"
+import { format } from "date-fns"
+import { ptBR } from "date-fns/locale"
 
 interface OrderListProps {
     orders: Array<
@@ -45,18 +47,23 @@ const OrderList = ({ orders }: OrderListProps) => {
             </div>
             {orders.map(order => (
                 <Card key={order.id}>
-                    <CardContent className="p-5 space-y-4">
-                        <div
-                            className={`w-fit rounded-full px-2 py-1 text-sm font-semibold 
+                    <CardContent className="p-5 space-y-4 justify">
+                        <div className="flex items-center justify-between">
+                            <div
+                                className={`w-fit rounded-full px-2 py-1 text-sm font-semibold 
         ${order.status === OrderStatus.FINISHED
-                                    ? "bg-green-500 text-white"
-                                    : order.status === OrderStatus.IN_PREPARATION
-                                        ? "bg-yellow-400 text-white"
-                                        : "bg-gray-200 text-gray-500"
-                                }
+                                        ? "bg-green-500 text-white"
+                                        : order.status === OrderStatus.IN_PREPARATION
+                                            ? "bg-yellow-400 text-white"
+                                            : "bg-gray-200 text-gray-500"
+                                    }
     `}
-                        >
-                            {getStatusLabel(order.status)}
+                            >
+                                {getStatusLabel(order.status)}
+                            </div>
+                            <p className="text-sm text-gray-500">
+                                {format(new Date(order.createdAt), "dd/MM/yyy HH:mm", { locale: ptBR })}
+                            </p>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="relative h-5 w-5">
