@@ -19,13 +19,12 @@ interface CreateOrderInput {
 
 export const createOrder = async (input: CreateOrderInput) => {
     const restaurant = await db.restaurant.findUnique({
-        where: {
-            slug: input.slug
-        }
+        where: { slug: input.slug }
     })
-    if(!restaurant){
+    if (!restaurant) {
         throw new Error("Restaurant not found")
     }
+
     const productsWithPrices = await db.product.findMany({
         where: {
             id: {
@@ -34,10 +33,12 @@ export const createOrder = async (input: CreateOrderInput) => {
         }
     })
 
+    const productPriceMap = new Map(productsWithPrices.map(p => [p.id, p.price]));
+
     const productsWithPricesAndQuantities = input.products.map(product => ({
         productId: product.id,
         quantity: product.quantity,
-        price: productsWithPrices.find(p => p.id === product.id)!.price
+        price: productPriceMap.get(product.id)!
     }))
 
     await db.order.create({
@@ -58,5 +59,6 @@ export const createOrder = async (input: CreateOrderInput) => {
             restaurantId: restaurant.id
         }
     })
-    redirect(`/${input.slug}/orders`)
+
+    redirect(`/${input.slug}/orders?cpf=${removeCpfPunctuation(input.customerCpf)}`)
 }
