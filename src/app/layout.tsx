@@ -13,9 +13,46 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Mc Donalds",
-  description: "Full Stack APP!",
-};
+  generator: 'Next.js',
+  title: 'McDonalds',
+  description: 'Delivery App Clone',
+  applicationName: 'McDonalds',
+  referrer: 'origin-when-cross-origin',
+  keywords: ['Next.js', 'React', 'JavaScript', 'typescript', 'nextjs', 'frontend', 'developer', 'front end', 'programmer'],
+  authors: [{ name: 'Eduardo Rigo', url: 'https://eduardev.com' }],
+  creator: 'Eduardo Rigo',
+  publisher: 'Eduardo Rigo',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: 'McDonalds',
+    description: 'Delivery App Clone',
+    url: 'https://mcdonalds.eduardev.com',
+    siteName: 'McDonalds',
+    images: [
+      {
+        url: 'https://mcdonalds.eduardev.com/images/bg.png',
+        width: 800,
+        height: 600,
+      },
+      {
+        url: 'https://mcdonalds.eduardev.com/images/bg-g.png',
+        width: 1800,
+        height: 1600,
+      },
+    ],
+    type: 'website',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+  },
+}
+
+
 
 export default function RootLayout({
   children,
