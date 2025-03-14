@@ -3,10 +3,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
+import CustomButton from "@/components/AuthorButton";
 import { Toaster } from "@/components/ui/sonner";
 
 import { CartProvider } from "./[slug]/menu/contexts/cart";
-import CustomButton from "@/components/AuthorButton";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
