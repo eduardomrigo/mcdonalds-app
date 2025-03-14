@@ -101,11 +101,13 @@ function ProductDetail({ product }: ProductDetailProps) {
                                 <ChefHatIcon size={18} />
                                 <h4 className="font-semibold">Ingredientes</h4>
                             </div>
+                            <ScrollArea className="h-40">
                             <ul className="list-disc px-5 text-sm text-muted-foreground">
                                 {product.ingredients.map((ingredient) => (
                                     <li key={ingredient}>{ingredient}</li>
                                 ))}
                             </ul>
+                        </ScrollArea>
                         </div>
                     </ScrollArea>
                 </div>
